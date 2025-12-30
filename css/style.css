@@ -199,3 +199,122 @@ footer {
 .float-btn.call {
   background-color: #0b5ed7;
 }
+/* ===== ADMISSIONS FORM ===== */
+.form-section {
+  background-color: #ffffff;
+  padding: 50px 20px;
+  max-width: 1000px;
+  margin: 60px auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h2 {
+  color: #0b5ed7;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.form-section p {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.form-container iframe {
+  border-radius: 10px;
+}
+
+/* Mobile fix */
+@media (max-width: 768px) {
+  .form-section {
+    padding: 30px 15px;
+  }
+
+  .form-container iframe {
+    height: 1400px;
+  }
+}
+/* ===== NEWS & ANNOUNCEMENTS ===== */
+.news {
+  padding: 60px 20px;
+  text-align: center;
+  background-color: #f4f6f9;
+}
+
+.news h2 {
+  color: #0b5ed7;
+  margin-bottom: 30px;
+}
+
+.news-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.news-card {
+  background: #ffffff;
+  width: 300px;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: left;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.news-card h3 {
+  color: #20c997;
+  margin: 10px 0;
+}
+
+.news-card p {
+  color: #555;
+  font-size: 15px;
+}
+
+.news-date {
+  font-size: 13px;
+  color: #888;
+  font-weight: bold;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .news-card {
+    width: 100%;
+  }
+}
+/* ===== LIGHTBOX ===== */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+}
+
+.lightbox:target {
+  display: flex;
+}
+
+.lightbox .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}

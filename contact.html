@@ -1,91 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Eliana Trust School</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Eliana Trust School</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <h1>ELIANA TRUST SCHOOL</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="about.html">About Us</a>
-            <a href="academics.html">Academics</a>
-            <a href="admissions.html">Admissions</a>
-            <a href="contact.html">Contact</a>
-        </nav>
-    </header>
+<!-- HEADER -->
+<header>
+  <h1>ELIANA TRUST SCHOOL</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="academics.html">Academics</a>
+    <a href="admissions.html">Admissions</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+</header>
 
-    <!-- PAGE INTRO -->
-    <section class="hero">
-        <h2>Contact Us</h2>
-        <p>We are happy to hear from you — visit or reach us anytime</p>
-    </section>
+<!-- HERO -->
+<section class="hero">
+  <h2>Contact Us</h2>
+  <p>We are happy to hear from you — visit or reach us anytime</p>
+</section>
 
-    <!-- MAIN CONTENT -->
-    <main style="max-width: 900px; margin: auto; text-align: left;">
+<!-- MAIN CONTENT -->
+<main>
 
-        <h2>Phone</h2>
-        <p>📞 +260 961147474</p>
-        <p>📞 +260 972616876</p>
+  <!-- CONTACT INFO -->
+  <section class="features">
+    <h2>Get in Touch</h2>
 
-        <h2>Email</h2>
+    <div class="feature-cards">
+
+      <div class="card">
+        <h3>Phone Numbers</h3>
+        <p>📞 +260 961 147 474</p>
+        <p>📞 +260 972 616 876</p>
+        <p>📞 +260 978 859 120</p>
+      </div>
+
+      <div class="card">
+        <h3>Email Addresses</h3>
         <p>📧 annakangwa78@gmail.com</p>
         <p>📧 admissions@elianatrustschool.com</p>
+      </div>
 
-        <h2>Our Campuses</h2>
+      <div class="card">
+        <h3>Office Hours</h3>
+        <p>Monday – Friday</p>
+        <p>07:30 – 16:30</p>
+        <p>Saturday: 08:00 – 12:00</p>
+      </div>
 
+    </div>
+  </section>
+
+  <!-- CAMPUSES -->
+  <section class="features">
+    <h2>Our Campuses</h2>
+
+    <div class="feature-cards">
+
+      <div class="card">
         <h3>Campus A & B</h3>
         <p>
-            Kabangwe West,<br>
-            Great East North 7070 Road,<br>
-            Lilanda Village: campus A:+260979693746   campus B : +260978859120
+          Kabangwe West<br>
+          Great East North 7070 Road<br>
+          Lilanda Village
         </p>
+        <p>📞 Campus A: 0979 693 746</p>
+        <p>📞 Campus B: 0978 859 120</p>
+      </div>
 
+      <div class="card">
         <h3>Campus C</h3>
         <p>
-            Kabangwe West,<br>
-            7070 Road,<br>
-            Mwanshama Village : 0978859125
+          Kabangwe West<br>
+          7070 Road<br>
+          Mwanshama Village
         </p>
+        <p>📞 0978 859 125</p>
+      </div>
 
-        <h3>Ngwerere Campus (Day & Boarding)</h3>
+      <div class="card">
+        <h3>Ngwerere Campus</h3>
         <p>
-            6 Miles, Ngwerere Road,<br>
-            Beyond Prime TV: 0971992482
+          6 Miles, Ngwerere Road<br>
+          Beyond Prime TV
         </p>
+        <p>📞 0971 992 482</p>
+        <p><strong>Day & Boarding</strong></p>
+      </div>
 
-        <h2>Send Us a Message</h2>
-        <form>
-            <p>
-                <label>Full Name<br>
-                <input type="text" required></label>
-            </p>
+    </div>
+  </section>
 
-            <p>
-                <label>Email Address<br>
-                <input type="email" required></label>
-            </p>
+  <!-- MAPS -->
+  <section class="features">
+    <h2>Find Us on the Map</h2>
 
-            <p>
-                <label>Message<br>
-                <textarea rows="5" required></textarea></label>
-            </p>
+    <div class="card" style="max-width:1000px; margin:auto;">
 
-            <p>
-                <button type="submit">Send Message</button>
-            </p>
-        </form>
+      <label for="campusSelect"><strong>Select Campus:</strong></label><br><br>
 
-    </main>
+      <select id="campusSelect" onchange="changeMap()" style="width:100%; padding:10px;">
+        <option value="ngwerere">Ngwerere Campus (Day & Boarding)</option>
+        <option value="kabangwe">Campus A & B – Kabangwe West</option>
+        <option value="campusc">Campus C – Mwanshama</option>
+      </select>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>&copy; 2025 Eliana Trust School. All Rights Reserved.</p>
-    </footer>
+      <div style="margin-top:20px;">
+        <iframe
+          id="campusMap"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3848.069784263813!2d28.282554274303116!3d-15.318442285257447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19405fc5e06edbf7%3A0x89cb19877fe5042!2sDoor%20Of%20Hope!5e0!3m2!1sen!2szm!4v1767052041697!5m2!1sen!2szm"
+          width="100%"
+          height="420"
+          style="border:0; border-radius:10px;"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 Eliana Trust School. All Rights Reserved.</p>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<div class="floating-buttons">
+  <a href="https://wa.me/260978859120" target="_blank" class="float-btn whatsapp" title="Chat on WhatsApp">💬</a>
+  <a href="tel:+260978859120" class="float-btn call" title="Call Us">📞</a>
+</div>
+
+<!-- MAP SCRIPT -->
+<script>
+function changeMap() {
+  const map = document.getElementById("campusMap");
+  const campus = document.getElementById("campusSelect").value;
+
+  if (campus === "ngwerere") {
+    map.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3848.069784263813!2d28.282554274303116!3d-15.318442285257447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19405fc5e06edbf7%3A0x89cb19877fe5042!2sDoor%20Of%20Hope!5e0!3m2!1sen!2szm!4v1767052041697!5m2!1sen!2szm";
+  }
+
+  if (campus === "kabangwe") {
+    map.src = "https://www.google.com/maps?q=Kabangwe%20West%207070%20Road&output=embed";
+  }
+
+  if (campus === "campusc") {
+    map.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3847.9605875060197!2d28.23211497430332!3d-15.324376885252285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19405f709bf94523%3A0x98a0a3942348e255!2sEliana%20School!5e0!3m2!1sen!2szm!4v1767052991302!5m2!1sen!2szm";
+  }
+}
+</script>
 
 </body>
 </html>
