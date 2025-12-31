@@ -318,3 +318,74 @@ footer {
   text-decoration: none;
   font-weight: bold;
 }
+/* ===== GALLERY GRID ===== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 15px;
+}
+
+/* Gallery card link */
+.gallery-card {
+  text-decoration: none;
+  color: inherit;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Thumbnail images */
+.gallery-card img {
+  width: 100%;
+  height: 160px;          /* 👈 FIXES BIG IMAGES */
+  object-fit: cover;     /* 👈 CROPS NICELY */
+  display: block;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Caption */
+.gallery-card p {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  background: white;
+}
+
+/* Mobile improvement */
+@media (max-width: 768px) {
+  .gallery-card img {
+    height: 140px;
+  }
+}
+/* ===== GALLERY PAGE ONLY FIX ===== */
+.gallery-page {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  .gallery-page {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .gallery-page {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Gallery thumbnails ONLY */
+.gallery-page .gallery-card img {
+  height: 160px;
+  object-fit: cover;
+}
+
+/* Prevent cards sticking together */
+.gallery-page .gallery-card {
+  padding: 0;
+}
