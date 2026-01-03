@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent Portal | Eliana Trust School</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <h1>ELIANA TRUST SCHOOL</h1>
+  <nav>
+     <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="academics.html">Academics</a>
+            <a href="admissions.html">Admissions</a>
+            <a href="register.html">Register</a>
+            <a href="parent-portal.html">Parent Portal</a>
+            <a href="results.html" class="active">Results</a>
+             <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h2>Parent Portal</h2>
+  <p>Track learner progress, results, and academic updates</p>
+</section>
+
+<!-- PORTAL -->
+<main>
+  <section class="form-section">
+    <h2>Access Learner Information</h2>
+    <p>Enter the learner details provided by the school</p>
+
+    <form onsubmit="return checkStudent()">
+      <p>
+        <label>
+          Student ID / Admission Number<br>
+          <input type="text" id="studentId" required>
+        </label>
+      </p>
+
+      <p>
+        <label>
+          Learner Full Name<br>
+          <input type="text" id="studentName" required>
+        </label>
+      </p>
+
+      <p>
+        <button type="submit">View Results</button>
+      </p>
+    </form>
+
+    <p id="error" style="color:red; display:none; text-align:center;">
+      Learner not found. Please check details.
+    </p>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 Eliana Trust School. All Rights Reserved.</p>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<div class="floating-buttons">
+  <a href="https://wa.me/260978859120" target="_blank" class="float-btn whatsapp">💬</a>
+  <a href="tel:+260978859120" class="float-btn call">📞</a>
+</div>
+
+<!-- SIMPLE SCRIPT -->
+<script>
+function checkStudent() {
+  const id = document.getElementById("studentId").value.trim();
+  const name = document.getElementById("studentName").value.trim();
+
+  if (id !== "" && name !== "") {
+    // Redirect to results page
+    window.location.href = "results.html";
+    return false;
+  } else {
+    document.getElementById("error").style.display = "block";
+    return false;
+  }
+}
+</script>
+
+</body>
+</html>

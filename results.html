@@ -1,70 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Results | Eliana Trust School</title>
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Results | Eliana Trust School</title>
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+.form-section{
+  max-width:900px;
+  margin:40px auto;
+  background:#fff;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 6px 20px rgba(0,0,0,.1);
+}
+input, select{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+.btn{
+  background:#0b5ed7;
+  color:#fff;
+  padding:10px 18px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  margin-top:10px;
+}
+.btn.secondary{ background:#20c997; }
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+th,td{
+  border:1px solid #000;
+  padding:8px;
+  text-align:center;
+}
+th{ background:#0b5ed7; color:#fff; }
+
+#printArea{ position:relative; padding:30px; background:#fff; }
+.watermark{
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  opacity:.08;
+  width:350px;
+}
+.pdf-content{ position:relative; z-index:2; }
+.pdf-logo{ width:150px; display:block; margin:0 auto 10px; }
+.stamp{ width:90px; float:right; margin-top:10px; }
+</style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <h1>ELIANA TRUST SCHOOL</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About Us</a>
-      <a href="academics.html">Academics</a>
-      <a href="admissions.html">Admissions</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="register.html">Register</a>
-      <a href="results.html" class="active">Results</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+<header>
+<h1>ELIANA TRUST SCHOOL</h1>
+<nav>
+<a href="index.html">Home</a>
+<a href="about.html">About Us</a>
+<a href="academics.html">Academics</a>
+<a href="admissions.html">Admissions</a>
+<a href="register.html">Register</a>
+<a href="parent-portal.html">Parent Portal</a>
+<a href="results.html" class="active">Results</a>
+<a href="gallery.html">Gallery</a>
+<a href="contact.html">Contact</a>
+</nav>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h2>Student Results Portal</h2>
-    <p>Official academic results published by Eliana Trust School</p>
-  </section>
+<section class="hero">
+<h2>Student Results Portal</h2>
+<p>Official Result Slip (Printable PDF)</p>
+</section>
 
-  <!-- RESULTS SECTION -->
-  <main>
-    <section class="form-section">
-      <h2>Published Examination Results</h2>
-      <p>
-        Parents and guardians can view learner results below.
-        For clarifications, kindly contact the school administration.
-      </p>
+<main>
+<section class="form-section">
+<h2>Check Results</h2>
 
-      <div class="form-container">
-        <iframe 
-          src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSwaCXFeJh_TTBoIpWTRA3kQyGXVm0dJrlqr7LI4FU02ujbry_CXmc4Ojye2kYuq7wgYQ2-dWVYn47h/pubhtml?widget=true&headers=false"
-          width="100%"
-          height="700"
-          style="border:0;"
-          loading="lazy">
-        </iframe>
+<form id="resultForm">
+<input type="text" id="admissionNo" placeholder="Admission Number" required>
+
+<select id="term" required>
+<option value="">Select Term</option>
+<option>Term 1</option>
+<option>Term 2</option>
+<option>Term 3</option>
+</select>
+
+<select id="year" required>
+<option value="">Select Year</option>
+<option>2026</option>
+<option>2027</option>
+<option>2028</option>
+</select>
+
+<button class="btn" type="submit">View Results</button>
+</form>
+
+<div id="resultOutput"></div>
+</section>
+</main>
+
+<footer>
+<p>&copy; 2026 Eliana Trust School. All Rights Reserved.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+const sheetURL =
+"https://opensheet.elk.sh/16jBJP4DgQrnHwKCr_ptA0xWYk3YIwRlDp0o5Q2WsriU/Eresults";
+
+const grade = s => s>=75?'A':s>=60?'B':s>=50?'C':s>=40?'D':'F';
+const remark = s => s>=75?'Excellent':s>=60?'Very Good':s>=50?'Good':s>=40?'Fair':'Fail';
+
+document.getElementById("resultForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const adm = document.getElementById("admissionNo").value.trim();
+  const term = document.getElementById("term").value.trim().toLowerCase();
+  const year = document.getElementById("year").value.trim().toLowerCase();
+  const out = document.getElementById("resultOutput");
+
+  out.innerHTML = "Checking results...";
+
+  fetch(sheetURL)
+    .then(res => res.json())
+    .then(data => {
+
+      // 1️⃣ Admission number match
+      const student = data.filter(r =>
+        String(r.AdmissionNo).trim() === adm
+      );
+
+      if(!student.length){
+        out.innerHTML = `
+        <div style="color:red">
+          ❌ Candidate not found.<br>
+          Kindly contact the school administration.
+        </div>`;
+        return;
+      }
+
+      // 2️⃣ Term + Year (CASE-INSENSITIVE)
+      const results = student.filter(r =>
+        String(r.term).trim().toLowerCase() === term &&
+        String(r.year).trim().toLowerCase() === year
+      );
+
+      if(!results.length){
+        out.innerHTML = `
+        <div style="color:#b02a37">
+          ⚠ Results for the selected year or term are not available.<br>
+          Kindly choose the correct year and term.
+        </div>`;
+        return;
+      }
+
+      // 3️⃣ Build result table
+      let rows = "";
+      results.forEach(r=>{
+        const s = Number(r.Score);
+        rows += `
+        <tr>
+          <td>${r.Subject}</td>
+          <td>${s}</td>
+          <td>${grade(s)}</td>
+          <td>${remark(s)}</td>
+        </tr>`;
+      });
+
+      out.innerHTML = `
+      <div id="printArea">
+        <img src="logo.jpg" class="watermark">
+
+        <div class="pdf-content">
+          <img src="logo.jpg" class="pdf-logo">
+          <h2 style="text-align:center">ELIANA TRUST SCHOOL</h2>
+          <p style="text-align:center"><strong>${term.toUpperCase()} - ${year}</strong></p>
+
+          <p><strong>Name:</strong> ${results[0].StudentName}</p>
+          <p><strong>Admission No:</strong> ${results[0].AdmissionNo}</p>
+          <p><strong>Class:</strong> ${results[0].Class}</p>
+
+          <img src="stamp.png" class="stamp">
+
+          <table>
+            <tr>
+              <th>Subject</th>
+              <th>Score</th>
+              <th>Grade</th>
+              <th>Remark</th>
+            </tr>
+            ${rows}
+          </table>
+        </div>
       </div>
-    </section>
-  </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>&copy; 2025 Eliana Trust School. All Rights Reserved.</p>
-  </footer>
+      <button class="btn secondary" onclick="downloadPDF()">
+        Download / Print PDF
+      </button>`;
+    })
+    .catch(()=>{
+      out.innerHTML = "⚠ Error loading results. Please try again.";
+    });
+});
 
-  <!-- FLOATING BUTTONS -->
-  <div class="floating-buttons">
-    <a href="https://wa.me/260978859120" target="_blank" class="float-btn whatsapp" title="Chat on WhatsApp">
-      💬
-    </a>
-    <a href="tel:+260978859120" class="float-btn call" title="Call Us">
-      📞
-    </a>
-  </div>
+function downloadPDF(){
+  const area = document.getElementById("printArea");
+  if(!area) return;
 
+  html2pdf().set({
+    margin:0.5,
+    filename:"Eliana_Trust_School_Result.pdf",
+    image:{type:"jpeg",quality:0.98},
+    html2canvas:{scale:2,useCORS:true},
+    jsPDF:{unit:"in",format:"A4",orientation:"portrait"}
+  }).from(area).save();
+}
+</script>
 </body>
 </html>
