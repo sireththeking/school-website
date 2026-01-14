@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student Results | Eliana Trust School</title>
+
 <link rel="stylesheet" href="css/style.css">
 
 <style>
@@ -48,14 +49,13 @@ th{ background:#0b5ed7; color:#fff; }
 #printArea{
   position:relative;
   padding:30px;
-  background:#ffffff;
+  background:#fff;
 }
 .watermark{
   position:absolute;
-  top:50%;
-  left:50%;
+  top:50%; left:50%;
   transform:translate(-50%,-50%);
-  opacity:0.08;
+  opacity:.08;
   width:350px;
 }
 .pdf-content{ position:relative; z-index:2; }
@@ -69,15 +69,15 @@ th{ background:#0b5ed7; color:#fff; }
 <header>
 <h1>ELIANA TRUST SCHOOL</h1>
 <nav>
-<a href="index.html">Home</a>
-<a href="about.html">About Us</a>
-<a href="academics.html">Academics</a>
-<a href="admissions.html">Admissions</a>
-<a href="register.html">Register</a>
-<a href="parent-portal.html">Parent Portal</a>
-<a href="results.html" class="active">Results</a>
-<a href="gallery.html">Gallery</a>
-<a href="contact.html">Contact</a>
+  <a href="index.html">Home</a>
+  <a href="about.html">About Us</a>
+  <a href="academics.html">Academics</a>
+  <a href="admissions.html">Admissions</a>
+  <a href="register.html">Register</a>
+  <a href="parent-portal.html">Parent Portal</a>
+  <a href="results.html" class="active">Results</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="contact.html">Contact</a>
 </nav>
 </header>
 
@@ -91,23 +91,23 @@ th{ background:#0b5ed7; color:#fff; }
 <h2>Check Results</h2>
 
 <form id="resultForm">
-<input type="text" id="admissionNo" placeholder="Admission Number" required>
+  <input type="text" id="admissionNo" placeholder="Admission Number" required>
 
-<select id="term" required>
-<option value="">Select Term</option>
-<option>Term 1</option>
-<option>Term 2</option>
-<option>Term 3</option>
-</select>
+  <select id="term" required>
+    <option value="">Select Term</option>
+    <option>Term 1</option>
+    <option>Term 2</option>
+    <option>Term 3</option>
+  </select>
 
-<select id="year" required>
-<option value="">Select Year</option>
-<option>2026</option>
-<option>2027</option>
-<option>2028</option>
-</select>
+  <select id="year" required>
+    <option value="">Select Year</option>
+    <option>2026</option>
+    <option>2027</option>
+    <option>2028</option>
+  </select>
 
-<button class="btn" type="submit">View Results</button>
+  <button class="btn" type="submit">View Results</button>
 </form>
 
 <div id="resultOutput"></div>
@@ -146,7 +146,11 @@ document.getElementById("resultForm").addEventListener("submit", function(e){
       );
 
       if(!student.length){
-        out.innerHTML = `<p style="color:red">❌ Candidate not found.</p>`;
+        out.innerHTML = `
+        <div style="color:red">
+          ❌ Candidate not found.<br>
+          Kindly contact the school administration.
+        </div>`;
         return;
       }
 
@@ -157,14 +161,14 @@ document.getElementById("resultForm").addEventListener("submit", function(e){
 
       if(!results.length){
         out.innerHTML = `
-        <p style="color:#b02a37">
-        ⚠ Results for the selected year or term are not available.<br>
-        Kindly choose the correct year and term.
-        </p>`;
+        <div style="color:#b02a37">
+          ⚠ Results for the selected year or term are not available.<br>
+          Kindly choose the correct year and term.
+        </div>`;
         return;
       }
 
-      let rows="";
+      let rows = "";
       results.forEach(r=>{
         const s = Number(r.Score);
         rows += `
@@ -178,10 +182,10 @@ document.getElementById("resultForm").addEventListener("submit", function(e){
 
       out.innerHTML = `
       <div id="printArea">
-        <img src="./logo.jpg" class="watermark">
+        <img src="logo.jpg" class="watermark">
 
         <div class="pdf-content">
-          <img src="./logo.jpg" class="pdf-logo">
+          <img src="logo.jpg" class="pdf-logo">
           <h2 style="text-align:center">ELIANA TRUST SCHOOL</h2>
           <p style="text-align:center"><strong>${term.toUpperCase()} - ${year}</strong></p>
 
@@ -189,7 +193,7 @@ document.getElementById("resultForm").addEventListener("submit", function(e){
           <p><strong>Admission No:</strong> ${results[0].AdmissionNo}</p>
           <p><strong>Class:</strong> ${results[0].Class}</p>
 
-          <img src="./stamp.png" class="stamp">
+          <img src="stamp.png" class="stamp">
 
           <table>
             <tr>
@@ -216,25 +220,24 @@ function downloadPDF(){
   const area = document.getElementById("printArea");
   if(!area) return;
 
+  // 🔒 GitHub Pages FIX: hide images temporarily
+  const images = area.querySelectorAll("img");
+  images.forEach(img => img.style.display = "none");
+
   setTimeout(() => {
     html2pdf().from(area).set({
       margin:0.5,
       filename:"Eliana_Trust_School_Result.pdf",
       image:{type:"jpeg",quality:0.98},
-      html2canvas:{
-        scale:2,
-        useCORS:true,
-        backgroundColor:"#ffffff",
-        onclone:(doc)=>{
-          const wm = doc.querySelector(".watermark");
-          if(wm) wm.style.display="none";
-        }
-      },
+      html2canvas:{scale:2, backgroundColor:"#ffffff"},
       jsPDF:{unit:"in",format:"A4",orientation:"portrait"}
-    }).save();
-  }, 500);
+    }).save().then(()=>{
+      images.forEach(img => img.style.display = "");
+    });
+  }, 300);
 }
 </script>
 
 </body>
 </html>
+
