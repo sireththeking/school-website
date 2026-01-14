@@ -2,65 +2,41 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student Results | Eliana Trust School</title>
-
-<link rel="stylesheet" href="css/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+body{font-family:Arial;background:#f4f6f9;margin:0}
+header,footer{background:#0b5ed7;color:#fff;text-align:center;padding:15px}
+nav a{color:#fff;margin:0 8px;text-decoration:none}
+
 .form-section{
-  max-width:900px;
-  margin:40px auto;
-  background:#fff;
-  padding:25px;
-  border-radius:12px;
-  box-shadow:0 6px 20px rgba(0,0,0,.1);
+  max-width:900px;margin:40px auto;background:#fff;
+  padding:25px;border-radius:10px
 }
-input, select{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  border-radius:6px;
-  border:1px solid #ccc;
+input,select{
+  width:100%;padding:10px;margin:10px 0;
+  border-radius:6px;border:1px solid #ccc
 }
 .btn{
-  background:#0b5ed7;
-  color:#fff;
-  padding:10px 18px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  margin-top:10px;
+  background:#0b5ed7;color:#fff;
+  padding:10px 18px;border:none;
+  border-radius:6px;cursor:pointer
 }
-.btn.secondary{ background:#20c997; }
+.btn.secondary{background:#198754}
 
 table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:15px;
+  width:100%;border-collapse:collapse;margin-top:15px
 }
-th,td{
-  border:1px solid #000;
-  padding:8px;
-  text-align:center;
-}
-th{ background:#0b5ed7; color:#fff; }
+th,td{border:1px solid #000;padding:8px;text-align:center}
+th{background:#0b5ed7;color:#fff}
 
-#printArea{
-  position:relative;
-  padding:30px;
-  background:#fff;
+/* PRINT MODE */
+@media print{
+  body{background:#fff}
+  header,nav,.btn,.form-section form{display:none}
+  footer{position:fixed;bottom:0;width:100%}
 }
-.watermark{
-  position:absolute;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  opacity:.08;
-  width:350px;
-}
-.pdf-content{ position:relative; z-index:2; }
-.pdf-logo{ width:150px; display:block; margin:0 auto 10px; }
-.stamp{ width:90px; float:right; margin-top:10px; }
 </style>
 </head>
 
@@ -70,28 +46,15 @@ th{ background:#0b5ed7; color:#fff; }
 <h1>ELIANA TRUST SCHOOL</h1>
 <nav>
   <a href="index.html">Home</a>
-  <a href="about.html">About Us</a>
-  <a href="academics.html">Academics</a>
-  <a href="admissions.html">Admissions</a>
-  <a href="register.html">Register</a>
-  <a href="parent-portal.html">Parent Portal</a>
   <a href="results.html" class="active">Results</a>
-  <a href="gallery.html">Gallery</a>
-  <a href="contact.html">Contact</a>
 </nav>
 </header>
 
-<section class="hero">
-<h2>Student Results Portal</h2>
-<p>Official Result Slip (Printable PDF)</p>
-</section>
-
-<main>
 <section class="form-section">
 <h2>Check Results</h2>
 
 <form id="resultForm">
-  <input type="text" id="admissionNo" placeholder="Admission Number" required>
+  <input id="admissionNo" placeholder="Admission Number" required>
 
   <select id="term" required>
     <option value="">Select Term</option>
@@ -104,140 +67,91 @@ th{ background:#0b5ed7; color:#fff; }
     <option value="">Select Year</option>
     <option>2026</option>
     <option>2027</option>
-    <option>2028</option>
   </select>
 
-  <button class="btn" type="submit">View Results</button>
+  <button class="btn">View Results</button>
 </form>
 
 <div id="resultOutput"></div>
 </section>
-</main>
 
 <footer>
-<p>&copy; 2026 Eliana Trust School. All Rights Reserved.</p>
+<p>&copy; 2026 Eliana Trust School</p>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 <script>
-const sheetURL =
+const SHEET =
 "https://opensheet.elk.sh/16jBJP4DgQrnHwKCr_ptA0xWYk3YIwRlDp0o5Q2WsriU/Eresults";
 
-const grade = s => s>=75?'A':s>=60?'B':s>=50?'C':s>=40?'D':'F';
-const remark = s => s>=75?'Excellent':s>=60?'Very Good':s>=50?'Good':s>=40?'Fair':'Fail';
+const grade=s=>s>=75?'A':s>=60?'B':s>=50?'C':s>=40?'D':'F';
+const remark=s=>s>=75?'Excellent':s>=60?'Very Good':s>=50?'Good':s>=40?'Fair':'Fail';
 
-document.getElementById("resultForm").addEventListener("submit", function(e){
+document.getElementById("resultForm").onsubmit=e=>{
   e.preventDefault();
 
-  const adm  = document.getElementById("admissionNo").value.trim();
-  const term = document.getElementById("term").value.trim().toLowerCase();
-  const year = document.getElementById("year").value.trim().toLowerCase();
-  const out  = document.getElementById("resultOutput");
+  const adm=admissionNo.value.trim();
+  const term=document.getElementById("term").value.toLowerCase();
+  const year=document.getElementById("year").value.toLowerCase();
+  const out=resultOutput;
 
-  out.innerHTML = "Checking results...";
+  out.innerHTML="Loading...";
 
-  fetch(sheetURL)
-    .then(res => res.json())
-    .then(data => {
+  fetch(SHEET).then(r=>r.json()).then(data=>{
+    const student=data.filter(r=>String(r.AdmissionNo).trim()===adm);
+    if(!student.length){
+      out.innerHTML="❌ Candidate not found";
+      return;
+    }
 
-      const student = data.filter(r =>
-        String(r.AdmissionNo).trim() === adm
-      );
+    const res=student.filter(r=>
+      r.term.toLowerCase()===term &&
+      r.year.toLowerCase()===year
+    );
 
-      if(!student.length){
-        out.innerHTML = `
-        <div style="color:red">
-          ❌ Candidate not found.<br>
-          Kindly contact the school administration.
-        </div>`;
-        return;
-      }
+    if(!res.length){
+      out.innerHTML="⚠ Results not available for selected term/year";
+      return;
+    }
 
-      const results = student.filter(r =>
-        String(r.term).trim().toLowerCase() === term &&
-        String(r.year).trim().toLowerCase() === year
-      );
+    let rows="";
+    res.forEach(r=>{
+      rows+=`
+      <tr>
+        <td>${r.Subject}</td>
+        <td>${r.Score}</td>
+        <td>${grade(r.Score)}</td>
+        <td>${remark(r.Score)}</td>
+      </tr>`;
+    });
 
-      if(!results.length){
-        out.innerHTML = `
-        <div style="color:#b02a37">
-          ⚠ Results for the selected year or term are not available.<br>
-          Kindly choose the correct year and term.
-        </div>`;
-        return;
-      }
+    out.innerHTML=`
+    <div>
+      <h2 style="text-align:center">ELIANA TRUST SCHOOL</h2>
+      <p style="text-align:center"><b>${term.toUpperCase()} ${year}</b></p>
 
-      let rows = "";
-      results.forEach(r=>{
-        const s = Number(r.Score);
-        rows += `
+      <p><b>Name:</b> ${res[0].StudentName}</p>
+      <p><b>Admission No:</b> ${res[0].AdmissionNo}</p>
+      <p><b>Class:</b> ${res[0].Class}</p>
+
+      <table>
         <tr>
-          <td>${r.Subject}</td>
-          <td>${s}</td>
-          <td>${grade(s)}</td>
-          <td>${remark(s)}</td>
-        </tr>`;
-      });
+          <th>Subject</th>
+          <th>Score</th>
+          <th>Grade</th>
+          <th>Remark</th>
+        </tr>
+        ${rows}
+      </table>
 
-      out.innerHTML = `
-      <div id="printArea">
-        <img src="logo.jpg" class="watermark">
-
-        <div class="pdf-content">
-          <img src="logo.jpg" class="pdf-logo">
-          <h2 style="text-align:center">ELIANA TRUST SCHOOL</h2>
-          <p style="text-align:center"><strong>${term.toUpperCase()} - ${year}</strong></p>
-
-          <p><strong>Name:</strong> ${results[0].StudentName}</p>
-          <p><strong>Admission No:</strong> ${results[0].AdmissionNo}</p>
-          <p><strong>Class:</strong> ${results[0].Class}</p>
-
-          <img src="stamp.png" class="stamp">
-
-          <table>
-            <tr>
-              <th>Subject</th>
-              <th>Score</th>
-              <th>Grade</th>
-              <th>Remark</th>
-            </tr>
-            ${rows}
-          </table>
-        </div>
-      </div>
-
-      <button class="btn secondary" onclick="downloadPDF()">
+      <br>
+      <button class="btn secondary" onclick="window.print()">
         Download / Print PDF
-      </button>`;
-    })
-    .catch(()=>{
-      out.innerHTML = "⚠ Error loading results. Please try again.";
-    });
-});
-
-function downloadPDF(){
-  const area = document.getElementById("printArea");
-  if(!area) return;
-
-  // 🔒 GitHub Pages FIX: hide images temporarily
-  const images = area.querySelectorAll("img");
-  images.forEach(img => img.style.display = "none");
-
-  setTimeout(() => {
-    html2pdf().from(area).set({
-      margin:0.5,
-      filename:"Eliana_Trust_School_Result.pdf",
-      image:{type:"jpeg",quality:0.98},
-      html2canvas:{scale:2, backgroundColor:"#ffffff"},
-      jsPDF:{unit:"in",format:"A4",orientation:"portrait"}
-    }).save().then(()=>{
-      images.forEach(img => img.style.display = "");
-    });
-  }, 300);
-}
+      </button>
+    </div>`;
+  })
+  .catch(()=>out.innerHTML="⚠ Error loading results");
+};
 </script>
 
 </body>
 </html>
-
