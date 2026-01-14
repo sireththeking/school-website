@@ -45,12 +45,17 @@ th,td{
 }
 th{ background:#0b5ed7; color:#fff; }
 
-#printArea{ position:relative; padding:30px; background:#fff; }
+#printArea{
+  position:relative;
+  padding:30px;
+  background:#ffffff;
+}
 .watermark{
   position:absolute;
-  top:50%; left:50%;
+  top:50%;
+  left:50%;
   transform:translate(-50%,-50%);
-  opacity:.08;
+  opacity:0.08;
   width:350px;
 }
 .pdf-content{ position:relative; z-index:2; }
@@ -125,10 +130,10 @@ const remark = s => s>=75?'Excellent':s>=60?'Very Good':s>=50?'Good':s>=40?'Fair
 document.getElementById("resultForm").addEventListener("submit", function(e){
   e.preventDefault();
 
-  const adm = document.getElementById("admissionNo").value.trim();
+  const adm  = document.getElementById("admissionNo").value.trim();
   const term = document.getElementById("term").value.trim().toLowerCase();
   const year = document.getElementById("year").value.trim().toLowerCase();
-  const out = document.getElementById("resultOutput");
+  const out  = document.getElementById("resultOutput");
 
   out.innerHTML = "Checking results...";
 
@@ -136,21 +141,15 @@ document.getElementById("resultForm").addEventListener("submit", function(e){
     .then(res => res.json())
     .then(data => {
 
-      // 1️⃣ Admission number match
       const student = data.filter(r =>
         String(r.AdmissionNo).trim() === adm
       );
 
       if(!student.length){
-        out.innerHTML = `
-        <div style="color:red">
-          ❌ Candidate not found.<br>
-          Kindly contact the school administration.
-        </div>`;
+        out.innerHTML = `<p style="color:red">❌ Candidate not found.</p>`;
         return;
       }
 
-      // 2️⃣ Term + Year (CASE-INSENSITIVE)
       const results = student.filter(r =>
         String(r.term).trim().toLowerCase() === term &&
         String(r.year).trim().toLowerCase() === year
@@ -158,15 +157,14 @@ document.getElementById("resultForm").addEventListener("submit", function(e){
 
       if(!results.length){
         out.innerHTML = `
-        <div style="color:#b02a37">
-          ⚠ Results for the selected year or term are not available.<br>
-          Kindly choose the correct year and term.
-        </div>`;
+        <p style="color:#b02a37">
+        ⚠ Results for the selected year or term are not available.<br>
+        Kindly choose the correct year and term.
+        </p>`;
         return;
       }
 
-      // 3️⃣ Build result table
-      let rows = "";
+      let rows="";
       results.forEach(r=>{
         const s = Number(r.Score);
         rows += `
@@ -180,10 +178,10 @@ document.getElementById("resultForm").addEventListener("submit", function(e){
 
       out.innerHTML = `
       <div id="printArea">
-        <img src="logo.jpg" class="watermark">
+        <img src="./logo.jpg" class="watermark">
 
         <div class="pdf-content">
-          <img src="logo.jpg" class="pdf-logo">
+          <img src="./logo.jpg" class="pdf-logo">
           <h2 style="text-align:center">ELIANA TRUST SCHOOL</h2>
           <p style="text-align:center"><strong>${term.toUpperCase()} - ${year}</strong></p>
 
@@ -191,7 +189,7 @@ document.getElementById("resultForm").addEventListener("submit", function(e){
           <p><strong>Admission No:</strong> ${results[0].AdmissionNo}</p>
           <p><strong>Class:</strong> ${results[0].Class}</p>
 
-          <img src="stamp.png" class="stamp">
+          <img src="./stamp.png" class="stamp">
 
           <table>
             <tr>
@@ -218,14 +216,25 @@ function downloadPDF(){
   const area = document.getElementById("printArea");
   if(!area) return;
 
-  html2pdf().set({
-    margin:0.5,
-    filename:"Eliana_Trust_School_Result.pdf",
-    image:{type:"jpeg",quality:0.98},
-    html2canvas:{scale:2,useCORS:true},
-    jsPDF:{unit:"in",format:"A4",orientation:"portrait"}
-  }).from(area).save();
+  setTimeout(() => {
+    html2pdf().from(area).set({
+      margin:0.5,
+      filename:"Eliana_Trust_School_Result.pdf",
+      image:{type:"jpeg",quality:0.98},
+      html2canvas:{
+        scale:2,
+        useCORS:true,
+        backgroundColor:"#ffffff",
+        onclone:(doc)=>{
+          const wm = doc.querySelector(".watermark");
+          if(wm) wm.style.display="none";
+        }
+      },
+      jsPDF:{unit:"in",format:"A4",orientation:"portrait"}
+    }).save();
+  }, 500);
 }
 </script>
+
 </body>
 </html>
