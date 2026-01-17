@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Teacher Result Submission | Eliana Trust School</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{font-family:Arial;background:#f4f6f9;margin:0}
+header,footer{background:#0b5ed7;color:#fff;text-align:center;padding:15px}
+.container{
+  max-width:900px;margin:40px auto;background:#fff;
+  padding:25px;border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,.1)
+}
+h2{text-align:center;color:#0b5ed7}
+input,select,button{
+  width:100%;padding:10px;margin:10px 0;
+  border-radius:6px;border:1px solid #ccc
+}
+button{
+  background:#0b5ed7;color:#fff;font-size:16px;
+  cursor:pointer;border:none
+}
+button:hover{background:#084298}
+#msg{text-align:center;font-weight:bold;margin-top:10px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>ELIANA TRUST SCHOOL</h1>
+</header>
+
+<div class="container">
+<h2>Teacher Result Submission</h2>
+
+<!-- HIDDEN IFRAME (prevents redirect) -->
+<iframe name="hiddenFrame" style="display:none;"></iframe>
+
+<form id="resultForm"
+      action="https://script.google.com/macros/s/AKfycby54bZSmxWd1U8YsJoYxQE4EJq8haqydxczphXnPC3h4Xvz9I9-pl6ebx2m78G1AG-0Ig/exec"
+      method="POST"
+      target="hiddenFrame">
+
+  <input name="AdmissionNo" placeholder="Admission Number" required>
+  <input name="StudentName" placeholder="Student Name" required>
+  <input name="Class" placeholder="Class (e.g Grade 3)" required>
+  <input name="Subject" placeholder="Subject" required>
+  <input type="number" name="Score" placeholder="Score (0–100)" required>
+
+  <select name="term" required>
+    <option value="">Select Term</option>
+    <option>Term 1</option>
+    <option>Term 2</option>
+    <option>Term 3</option>
+  </select>
+
+  <select name="year" required>
+    <option value="">Select Year</option>
+    <option>2026</option>
+    <option>2027</option>
+    <option>2028</option>
+  </select>
+
+  <button type="submit">Submit Result</button>
+</form>
+
+<div id="msg"></div>
+</div>
+
+<footer>
+<p>&copy; 2026 Eliana Trust School</p>
+</footer>
+
+<script>
+document.getElementById("resultForm").addEventListener("submit", () => {
+  document.getElementById("msg").innerHTML =
+    "<span style='color:blue'>Submitting result...</span>";
+
+  setTimeout(() => {
+    document.getElementById("msg").innerHTML =
+      "<span style='color:green'>✅ Result successfully saved</span>";
+    document.getElementById("resultForm").reset();
+  }, 1200);
+});
+</script>
+
+</body>
+</html>
