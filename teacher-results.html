@@ -1,90 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Teacher Result Submission | Eliana Trust School</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Result Submission | Eliana Trust School</title>
 
-<style>
-body{font-family:Arial;background:#f4f6f9;margin:0}
-header,footer{background:#0b5ed7;color:#fff;text-align:center;padding:15px}
-.container{
-  max-width:900px;margin:40px auto;background:#fff;
-  padding:25px;border-radius:10px;
-  box-shadow:0 5px 15px rgba(0,0,0,.1)
-}
-h2{text-align:center;color:#0b5ed7}
-input,select,button{
-  width:100%;padding:10px;margin:10px 0;
-  border-radius:6px;border:1px solid #ccc
-}
-button{
-  background:#0b5ed7;color:#fff;font-size:16px;
-  cursor:pointer;border:none
-}
-button:hover{background:#084298}
-#msg{text-align:center;font-weight:bold;margin-top:10px}
-</style>
+  <style>
+    body{
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg,#0b5ed7,#084298);
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .card{
+      background:#fff;
+      width:100%;
+      max-width:520px;
+      padding:30px;
+      border-radius:14px;
+      box-shadow:0 15px 40px rgba(0,0,0,.2);
+    }
+
+    h2{
+      text-align:center;
+      color:#0b5ed7;
+      margin-bottom:25px;
+    }
+
+    label{
+      font-weight:600;
+      font-size:14px;
+      display:block;
+      margin-top:12px;
+    }
+
+    input, select{
+      width:100%;
+      padding:12px;
+      margin-top:6px;
+      border-radius:8px;
+      border:1px solid #ccc;
+      font-size:15px;
+    }
+
+    input:focus, select:focus{
+      outline:none;
+      border-color:#0b5ed7;
+      box-shadow:0 0 0 2px rgba(11,94,215,.15);
+    }
+
+    .error{
+      font-size:13px;
+      color:#dc3545;
+      margin-top:4px;
+    }
+
+    button{
+      width:100%;
+      margin-top:25px;
+      padding:14px;
+      border:none;
+      border-radius:10px;
+      background:#0b5ed7;
+      color:#fff;
+      font-size:16px;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    button:hover{
+      background:#084298;
+    }
+
+    #msg{
+      margin-top:18px;
+      text-align:center;
+      font-weight:600;
+    }
+
+    footer{
+      text-align:center;
+      font-size:12px;
+      margin-top:20px;
+      color:#6c757d;
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-<h1>ELIANA TRUST SCHOOL</h1>
-</header>
+<div class="card">
+  <h2>Teacher Result Submission</h2>
 
-<div class="container">
-<h2>Teacher Result Submission</h2>
+  <!-- Admission Number -->
+  <label>Admission Number</label>
+  <input id="AdmissionNo" placeholder="ETS26XXXX">
+  <div id="admError" class="error"></div>
 
-<!-- HIDDEN IFRAME (prevents redirect) -->
-<iframe name="hiddenFrame" style="display:none;"></iframe>
+  <!-- Student Name -->
+  <label>Student Name</label>
+  <input id="StudentName" placeholder="Full name">
 
-<form id="resultForm"
-      action="https://script.google.com/macros/s/AKfycby54bZSmxWd1U8YsJoYxQE4EJq8haqydxczphXnPC3h4Xvz9I9-pl6ebx2m78G1AG-0Ig/exec"
-      method="POST"
-      target="hiddenFrame">
-
-  <input name="AdmissionNo" placeholder="Admission Number" required>
-  <input name="StudentName" placeholder="Student Name" required>
-  <input name="Class" placeholder="Class (e.g Grade 3)" required>
-  <input name="Subject" placeholder="Subject" required>
-  <input type="number" name="Score" placeholder="Score (0–100)" required>
-
-  <select name="term" required>
-    <option value="">Select Term</option>
-    <option>Term 1</option>
-    <option>Term 2</option>
-    <option>Term 3</option>
+  <!-- Grade -->
+  <label>Grade / Class</label>
+  <select id="Class">
+    <option value="">Select Grade</option>
+    <option>Baby Class</option>
+    <option>Middle</option>
+    <option>Reception</option>
+    <option>Grade 1</option>
+    <option>Grade 2</option>
+    <option>Grade 3</option>
+    <option>Grade 4</option>
+    <option>Grade 5</option>
+    <option>Grade 6</option>
+    <option>Grade 7</option>
+    <option>Form 1</option>
+    <option>Form 2</option>
+    <option>Form 3</option>
+    <option>Form 4</option>
   </select>
 
-  <select name="year" required>
-    <option value="">Select Year</option>
+  <!-- Subject -->
+  <label>Subject</label>
+  <select id="Subject">
+    <option value="">Select Subject</option>
+    <option>English</option>
+    <option>Math</option>
+    <option>Science</option>
+    <option>Literacy</option>
+    <option>Numeracy</option>
+    <option>Social Studies</option>
+    <option>ICT</option>
+    <option>Creative Arts</option>
+    <option>Religious Education</option>
+  </select>
+
+  <!-- Score -->
+  <label>Score (0 – 100)</label>
+  <input id="Score" type="number" min="0" max="100">
+
+  <!-- Term -->
+  <label>Term</label>
+  <select id="term">
+    <option>term 1</option>
+    <option>term 2</option>
+    <option>term 3</option>
+  </select>
+
+  <!-- Year -->
+  <label>Year</label>
+  <select id="year">
     <option>2026</option>
     <option>2027</option>
     <option>2028</option>
   </select>
 
-  <button type="submit">Submit Result</button>
-</form>
+  <button onclick="submitResult()">Submit Result</button>
 
-<div id="msg"></div>
+  <div id="msg"></div>
+
+  <footer>
+    Eliana Trust School • Secure Academic Records
+  </footer>
 </div>
 
-<footer>
-<p>&copy; 2026 Eliana Trust School</p>
-</footer>
-
 <script>
-document.getElementById("resultForm").addEventListener("submit", () => {
-  document.getElementById("msg").innerHTML =
-    "<span style='color:blue'>Submitting result...</span>";
+function submitResult(){
+  const adm = AdmissionNo.value.trim();
+  const admError = document.getElementById("admError");
 
-  setTimeout(() => {
-    document.getElementById("msg").innerHTML =
-      "<span style='color:green'>✅ Result successfully saved</span>";
-    document.getElementById("resultForm").reset();
-  }, 1200);
-});
+  // Admission validation
+  if(!adm.startsWith("ETS26")){
+    admError.innerText = "Admission number must start with ETS26";
+    return;
+  }else{
+    admError.innerText = "";
+  }
+
+  const data = {
+    AdmissionNo: adm,
+    StudentName: StudentName.value.trim(),
+    Class: Class.value,
+    Subject: Subject.value,
+    Score: Score.value,
+    term: term.value,
+    year: year.value
+  };
+
+  document.getElementById("msg").innerText = "Submitting...";
+
+  google.script.run
+    .withSuccessHandler(()=>{
+      document.getElementById("msg").innerText = "✅ Result saved successfully";
+      document.querySelectorAll("input").forEach(i=>i.value="");
+      document.querySelectorAll("select").forEach(s=>s.selectedIndex=0);
+    })
+    .withFailureHandler(err=>{
+      document.getElementById("msg").innerText = "❌ " + err.message;
+    })
+    .saveResult(data);
+}
 </script>
 
 </body>
