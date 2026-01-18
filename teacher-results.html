@@ -8,8 +8,8 @@
 
   <style>
     body{
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: linear-gradient(135deg,#0b5ed7,#084298);
+      font-family:"Segoe UI",Arial,sans-serif;
+      background:linear-gradient(135deg,#0b5ed7,#084298);
       margin:0;
       min-height:100vh;
       display:flex;
@@ -23,7 +23,7 @@
       max-width:520px;
       padding:30px;
       border-radius:14px;
-      box-shadow:0 15px 40px rgba(0,0,0,.2);
+      box-shadow:0 15px 40px rgba(0,0,0,.25);
     }
 
     h2{
@@ -39,7 +39,7 @@
       margin-top:12px;
     }
 
-    input, select{
+    input,select{
       width:100%;
       padding:12px;
       margin-top:6px;
@@ -48,10 +48,10 @@
       font-size:15px;
     }
 
-    input:focus, select:focus{
+    input:focus,select:focus{
       outline:none;
       border-color:#0b5ed7;
-      box-shadow:0 0 0 2px rgba(11,94,215,.15);
+      box-shadow:0 0 0 2px rgba(11,94,215,.2);
     }
 
     .error{
@@ -97,16 +97,16 @@
 <div class="card">
   <h2>Teacher Result Submission</h2>
 
-  <!-- Admission Number -->
+  <!-- Admission -->
   <label>Admission Number</label>
   <input id="AdmissionNo" placeholder="ETS26XXXX">
   <div id="admError" class="error"></div>
 
-  <!-- Student Name -->
+  <!-- Name -->
   <label>Student Name</label>
   <input id="StudentName" placeholder="Full name">
 
-  <!-- Grade -->
+  <!-- Class -->
   <label>Grade / Class</label>
   <select id="Class">
     <option value="">Select Grade</option>
@@ -171,19 +171,21 @@
 </div>
 
 <script>
+const WEB_APP_URL =
+"https://script.google.com/macros/s/AKfycbytSMFPYSQUWNcwNfnbOlnkuX3HQ84jB9LOTt4j4uCFZyLrhQkAY6-oNWSp3i5yrmdHCA/exec";
+
 function submitResult(){
   const adm = AdmissionNo.value.trim();
   const admError = document.getElementById("admError");
 
-  // Admission validation
   if(!adm.startsWith("ETS26")){
     admError.innerText = "Admission number must start with ETS26";
     return;
-  }else{
+  } else {
     admError.innerText = "";
   }
 
-  const data = {
+  const payload = {
     AdmissionNo: adm,
     StudentName: StudentName.value.trim(),
     Class: Class.value,
@@ -195,18 +197,34 @@ function submitResult(){
 
   document.getElementById("msg").innerText = "Submitting...";
 
-  google.script.run
-    .withSuccessHandler(()=>{
-      document.getElementById("msg").innerText = "✅ Result saved successfully";
+  fetch(WEB_APP_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.status === "success"){
+      document.getElementById("msg").innerText =
+        "✅ Result saved successfully";
+
       document.querySelectorAll("input").forEach(i=>i.value="");
       document.querySelectorAll("select").forEach(s=>s.selectedIndex=0);
-    })
-    .withFailureHandler(err=>{
-      document.getElementById("msg").innerText = "❌ " + err.message;
-    })
-    .saveResult(data);
+    } else {
+      document.getElementById("msg").innerText =
+        "❌ " + data.message;
+    }
+  })
+  .catch(() => {
+    document.getElementById("msg").innerText =
+      "❌ Network error – deployment not public";
+  });
 }
 </script>
+
+
 
 </body>
 </html>
