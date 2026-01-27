@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Teacher Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body{
+      margin:0;
+      font-family:Segoe UI, Arial, sans-serif;
+      background:#f5f7fb;
+    }
+
+    header{
+      background:#0b5ed7;
+      padding:15px 30px;
+      color:#fff;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    nav a{
+      color:#fff;
+      text-decoration:none;
+      margin-left:20px;
+      font-weight:600;
+    }
+
+    main{
+      text-align:center;
+      padding:60px;
+    }
+
+    button{
+      background:#0b5ed7;
+      color:#fff;
+      border:none;
+      padding:15px 30px;
+      font-size:18px;
+      border-radius:6px;
+      cursor:pointer;
+    }
+
+    button:hover{
+      background:#094bb5;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <strong>Eliana Trust School</strong>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="teacher.html">Teacher Portal</a>
+  </nav>
+</header>
+
+<main>
+  <h2>Teacher Portal</h2>
+  <p>Click below to open the secure teacher system</p>
+
+  <button onclick="openPortal()">Open Teacher System</button>
+</main>
+
+<script>
+  function openPortal(){
+    window.open(
+      "https://script.google.com/macros/s/AKfycbz7NVKkUXroGj1L6MwtQO-shJHRdMnHmBMWiU75I-gMogFzOCFpi4H_nZSAkS5P7nEGAg/exec",
+      "_blank"
+    );
+  }
+</script>
+
+</body>
+</html>
