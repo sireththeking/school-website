@@ -389,3 +389,120 @@ footer {
 .gallery-page .gallery-card {
   padding: 0;
 }
+body{
+  font-family: "Segoe UI", Arial, sans-serif;
+  background:#f4f6f9;
+  margin:0;
+  color:#000;
+}
+
+header,footer{
+  background:#0b5ed7;
+  color:#fff;
+  text-align:center;
+  padding:15px;
+}
+
+nav a{
+  color:#fff;
+  margin:0 10px;
+  text-decoration:none;
+  font-weight:500;
+}
+
+.form-section{
+  max-width:900px;
+  margin:40px auto;
+  background:#fff;
+  padding:25px;
+  border-radius:12px;
+}
+
+input,select{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+
+.btn{
+  background:#0b5ed7;
+  color:#fff;
+  padding:10px 20px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:15px;
+}
+
+.btn.secondary{
+  background:#198754;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+}
+
+th,td{
+  border:1px solid #000;
+  padding:10px;
+  text-align:center;
+}
+
+th{
+  background:#0b5ed7;
+  color:#fff;
+}
+
+/* ================= PRINT DESIGN ================= */
+@media print{
+
+  body{
+    background:#fff;
+  }
+
+  header, nav, footer, form, .btn{
+    display:none !important;
+  }
+
+  .form-section{
+    box-shadow:none;
+    margin:0;
+    padding:0;
+  }
+
+  .result-slip{
+    padding:30px;
+  }
+
+  .school-title{
+    text-align:center;
+    color:#0b5ed7;
+    font-size:26px;
+    font-weight:700;
+  }
+
+  .term-title{
+    text-align:center;
+    font-size:15px;
+    margin-bottom:25px;
+    font-weight:600;
+  }
+
+  .student-info{
+    margin-bottom:20px;
+    line-height:1.8;
+  }
+
+  .student-info b{
+    width:150px;
+    display:inline-block;
+  }
+
+  table{
+    margin-top:15px;
+  }
+}
