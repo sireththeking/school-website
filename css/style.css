@@ -506,3 +506,38 @@ th{
     margin-top:15px;
   }
 }
+/* 📱 Mobile responsiveness */
+@media (max-width: 600px) {
+
+  body{
+    padding: 15px;
+    align-items: flex-start;
+  }
+
+  .card{
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  h2{
+    font-size: 20px;
+  }
+
+  label{
+    font-size: 13px;
+  }
+
+  input, select{
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  button{
+    font-size: 15px;
+    padding: 14px;
+  }
+
+}
+
