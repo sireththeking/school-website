@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="theme-color" content="#0a2a4a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Eliana Trust">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a2a4a'/%3E%3Ctext x='50' y='68' text-anchor='middle' fill='white' font-size='50' font-weight='bold'%3EETS%3C/text%3E%3C/svg%3E">
   <title>Eliana Trust School | Excellence in Education</title>
-  <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,17 +41,30 @@
     .quick-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; opacity: 0.6; }
     .quick-btn { background: rgba(255,255,255,0.08); border-radius: 40px; padding: 8px 12px; font-size: 12px; font-weight: 500; color: #f1f5f9; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; cursor: pointer; margin-bottom: 6px; width: 100%; }
     .quick-btn:hover { background: #2563eb; transform: translateX(4px); }
-    .main-content { flex: 1; margin-left: 280px; transition: margin 0.3s; }
+    .main-content { flex: 1; margin-left: 280px; transition: margin 0.3s; width: calc(100% - 280px); }
     
-    /* Mobile Sidebar - AUTO CLOSE */
+    /* Mobile Sidebar - AUTO CLOSE ON CLICK */
     @media (max-width: 768px) {
       .sidebar { transform: translateX(-100%); width: 280px; }
-      .sidebar.mobile-open { transform: translateX(0); }
-      .main-content { margin-left: 0; }
+      .sidebar.mobile-open { transform: translateX(0); box-shadow: 2px 0 20px rgba(0,0,0,0.3); }
+      .main-content { margin-left: 0; width: 100%; }
       .menu-toggle-btn { display: block !important; }
+      .container { padding: 20px 16px !important; }
+      .hero-modern h2 { font-size: 22px !important; }
+      .hero-modern p { font-size: 14px !important; }
+      .card-grid { gap: 16px !important; }
+      .card { padding: 18px !important; }
+      .iframe-portal-container { padding: 12px !important; margin: 12px auto !important; }
+      .iframe-portal-container h3 { font-size: 16px !important; }
+      .results-iframe, .receipt-iframe { height: 500px !important; }
+      .floating-admission { bottom: 80px !important; left: 12px !important; font-size: 11px !important; padding: 6px 12px !important; }
+      .floating-buttons { bottom: 80px !important; right: 12px !important; }
+      .floating-buttons .float-icon { width: 42px; height: 42px; font-size: 20px; }
+      .go-top { bottom: 80px !important; right: 12px !important; width: 42px; height: 42px; font-size: 18px; margin-right: 55px !important; }
     }
+    
     .menu-toggle-btn { display: none; position: fixed; top: 16px; left: 16px; background: #0b5ed7; color: white; border: none; font-size: 24px; padding: 10px 14px; border-radius: 40px; z-index: 1100; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-    .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 999; }
+    .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 999; transition: opacity 0.3s; }
     @media (max-width: 768px) { .overlay.active { display: block; } }
     
     .page-section { display: none; animation: fadeIn 0.3s ease; }
@@ -71,7 +87,7 @@
     .ticker-content { display: inline-block; animation: ticker 25s linear infinite; font-size: 14px; font-weight: 500; }
     @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     
-    /* Iframe Container Styles for Parent Portal */
+    /* Iframe Container Styles */
     .iframe-portal-container {
       background: white;
       border-radius: 24px;
@@ -97,19 +113,12 @@
       background: #f8fafc;
     }
     
-    /* Result & Receipt Styles */
-    .result-slip, .receipt-slip { background: white; border-radius: 24px; padding: 28px; margin: 20px 0; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1); text-align: left; }
-    .result-table, .receipt-table { width: 100%; border-collapse: collapse; margin: 20px 0; overflow-x: auto; display: block; }
-    .result-table th, .result-table td, .receipt-table th, .receipt-table td { border: 1px solid #e2e8f0; padding: 10px; text-align: center; font-size: 13px; }
-    .result-table th, .receipt-table th { background: #0b5ed7; color: white; }
-    .result-form-card, .payment-form-card { background: white; border-radius: 24px; padding: 28px; margin: 20px auto; max-width: 650px; box-shadow: 0 10px 25px -8px rgba(0,0,0,0.08); text-align: left; }
-    input, select { width: 100%; padding: 12px 16px; border-radius: 40px; border: 1px solid #cbd5e1; font-size: 14px; margin: 8px 0; font-family: inherit; }
-    
     /* Gallery */
     .gallery-slider-container { position: relative; max-width: 1000px; margin: auto; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
     .gallery-slider { display: flex; transition: transform 0.5s ease-in-out; }
     .gallery-slide { min-width: 100%; position: relative; }
     .gallery-slide img { width: 100%; height: 380px; object-fit: cover; display: block; }
+    @media (max-width: 768px) { .gallery-slide img { height: 250px; } }
     .slide-caption { position: absolute; bottom: 0; background: linear-gradient(transparent, rgba(0,0,0,0.7)); width: 100%; padding: 16px; color: white; text-align: center; font-weight: bold; }
     .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 12px; cursor: pointer; font-size: 18px; border-radius: 50%; z-index: 10; }
     .slider-btn:hover { background: #0b5ed7; }
@@ -131,29 +140,32 @@
     .campus-btn { background: #e2e8f0; border: none; padding: 8px 20px; border-radius: 40px; font-weight: 600; cursor: pointer; font-size: 13px; }
     .campus-btn.active, .campus-btn:hover { background: #0b5ed7; color: white; }
     .map-frame { width: 100%; height: 380px; border-radius: 24px; border: none; }
+    @media (max-width: 768px) { .map-frame { height: 280px; } }
     
     /* Floating Buttons */
-    .floating-admission { position: fixed; bottom: 30px; left: 20px; background: #059669; color: white; padding: 10px 18px; border-radius: 40px; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000; display: flex; align-items: center; gap: 8px; }
+    .floating-admission { position: fixed; bottom: 30px; left: 20px; background: #059669; color: white; padding: 10px 18px; border-radius: 40px; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s; }
+    .floating-admission:hover { transform: scale(1.05); }
     .floating-buttons { position: fixed; bottom: 30px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 999; }
-    .float-icon { width: 48px; height: 48px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .float-icon { width: 48px; height: 48px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s; }
+    .float-icon:hover { transform: scale(1.1); }
     .float-icon.call { background: #0b5ed7; }
-    .go-top { position: fixed; bottom: 30px; right: 20px; background: #0b5ed7; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; z-index: 1000; margin-right: 60px; }
-    @media (max-width: 768px) { .go-top { margin-right: 0; bottom: 100px; } .floating-admission { bottom: 100px; } .results-iframe, .receipt-iframe { height: 500px; } }
+    .go-top { position: fixed; bottom: 30px; right: 20px; background: #0b5ed7; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; z-index: 1000; margin-right: 60px; transition: transform 0.2s; }
+    .go-top:hover { transform: scale(1.1); }
     
     .iframe-chat { width: 100%; height: 500px; border-radius: 20px; border: none; margin-top: 20px; }
-    @media print { .sidebar, .floating-buttons, .go-top, .menu-toggle-btn, .ticker, .floating-admission, .result-form-card, .payment-form-card { display: none; } .main-content { margin: 0; } .result-slip, .receipt-slip { box-shadow: none; padding: 0; } }
+    @media print { .sidebar, .floating-buttons, .go-top, .menu-toggle-btn, .ticker, .floating-admission { display: none; } .main-content { margin: 0; } }
     
-    .grade-A { color: #059669; font-weight: bold; }
-    .grade-B { color: #3b82f6; font-weight: bold; }
-    .grade-C { color: #eab308; font-weight: bold; }
-    .grade-D { color: #f97316; font-weight: bold; }
-    .grade-F { color: #dc2626; font-weight: bold; }
+    /* Install Prompt */
+    .install-prompt { display: none; position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: #0a2a4a; color: white; padding: 12px 20px; border-radius: 50px; font-size: 13px; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.2); gap: 12px; align-items: center; white-space: nowrap; }
+    .install-prompt button { background: #0b5ed7; border: none; padding: 6px 16px; border-radius: 40px; color: white; font-weight: 600; cursor: pointer; margin-left: 10px; }
+    @media (max-width: 768px) { .install-prompt { bottom: 140px; font-size: 11px; padding: 8px 16px; } }
   </style>
 </head>
 <body>
 
 <button class="menu-toggle-btn" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
 <div class="overlay" id="overlay"></div>
+<div class="install-prompt" id="installPrompt"><i class="fas fa-download"></i> Install App <button id="installBtn">Install</button><button id="closeInstall">✕</button></div>
 
 <div class="app-wrapper">
   <aside class="sidebar" id="sidebar">
@@ -186,7 +198,6 @@
   </aside>
 
   <main class="main-content">
-    <!-- Ticker -->
     <div class="ticker"><div class="ticker-content">🎓 100% Exam Pass Rate | 🏆 ECZ Registered School | 📚 Modern Curriculum | 🏠 Safe Boarding | 💻 Digital Learning | 📱 SMS Alerts | 💳 Online Payments Coming Soon</div></div>
 
     <!-- HOME -->
@@ -213,17 +224,14 @@
     <!-- ADMISSIONS -->
     <div id="admissions" class="page-section"><div class="hero-modern"><h2>Admissions Open 2026</h2><a href="https://docs.google.com/forms/d/e/1FAIpQLSd9tZRkOYJGbW0tD57rm9d6pVAl20RMY1k1YAC-xzvEDWhd0w/viewform" target="_blank" class="btn-primary">Apply Online →</a></div><div class="container"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd9tZRkOYJGbW0tD57rm9d6pVAl20RMY1k1YAC-xzvEDWhd0w/viewform?embedded=true" width="100%" height="900" frameborder="0" style="border-radius:20px;"></iframe></div></div>
 
-    <!-- PARENT PORTAL - UPDATED WITH IFRAMES -->
+    <!-- PARENT PORTAL -->
     <div id="parent-portal" class="page-section">
       <div class="hero-modern"><h2>Parent Portal</h2><p>Access Results & Payment Receipts</p></div>
       <div class="container">
-        <!-- Results Iframe -->
         <div class="iframe-portal-container">
           <h3><i class="fas fa-graduation-cap"></i> Academic Results Portal</h3>
           <iframe src="https://script.google.com/macros/s/AKfycbySfimS4MD7v2wKlW3MyF5WlITeGFWmDmCHE-1IuGbguQIq0fCS22RvzBzr7ZCW9W3J/exec" class="results-iframe" title="Student Results Portal"></iframe>
         </div>
-        
-        <!-- Payment Receipts Iframe -->
         <div class="iframe-portal-container">
           <h3><i class="fas fa-receipt"></i> Payment Receipts Portal</h3>
           <iframe src="https://script.google.com/macros/s/AKfycbwaitF3QgCTpRuT-td312ebfxAy8sGsnoqZbHkSYSrkth7CJ1Gd-Jl8H-v0f8T_XXGg/exec" class="receipt-iframe" title="Payment Receipts Portal"></iframe>
@@ -231,7 +239,7 @@
       </div>
     </div>
 
-    <!-- RESULTS PAGE - Also updated with iframe -->
+    <!-- RESULTS PAGE -->
     <div id="results" class="page-section">
       <div class="hero-modern"><h2>Student Results Portal</h2><p>Access Your Academic Results</p></div>
       <div class="container">
@@ -273,33 +281,32 @@
   </main>
 </div>
 
-<div class="floating-admission"><i class="fas fa-door-open"></i> Admissions Open 2026</div>
+<div class="floating-admission" onclick="showPage('admissions')"><i class="fas fa-door-open"></i> Admissions Open 2026</div>
 <div class="floating-buttons"><a href="https://wa.me/260978859120" target="_blank" class="float-icon"><i class="fab fa-whatsapp"></i></a><a href="tel:+260978859120" class="float-icon call"><i class="fas fa-phone-alt"></i></a></div>
 <a href="#" class="go-top" id="goTopBtn"><i class="fas fa-chevron-up"></i></a>
 
 <script>
-/* ================== PAGE NAVIGATION WITH AUTO-CLOSE ================== */
+// PAGE NAVIGATION
 const pages = ['home', 'about', 'academics', 'admissions', 'parent-portal', 'results', 'gallery', 'news', 'digital', 'contact'];
+
+function closeSidebar() {
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('mobile-open');
+    document.getElementById('overlay').classList.remove('active');
+  }
+}
 
 function showPage(pageId) {
   pages.forEach(p => { 
     let el = document.getElementById(p); 
     if (el) el.classList.remove('active-section'); 
   });
-  
   document.getElementById(pageId)?.classList.add('active-section');
-  
   document.querySelectorAll('.nav-links-sidebar a').forEach(link => {
     link.classList.remove('active');
     if (link.getAttribute('data-page') === pageId) link.classList.add('active');
   });
-  
-  // AUTO-CLOSE SIDEBAR ON MOBILE
-  if (window.innerWidth <= 768) {
-    document.getElementById('sidebar').classList.remove('mobile-open');
-    document.getElementById('overlay').classList.remove('active');
-  }
-  
+  closeSidebar();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -314,6 +321,7 @@ document.querySelectorAll('.nav-links-sidebar a, .quick-btn[data-page]').forEach
 document.getElementById('scrollTopBtn')?.addEventListener('click', (e) => {
   e.preventDefault();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  closeSidebar();
 });
 
 document.getElementById('goTopBtn')?.addEventListener('click', (e) => {
@@ -326,12 +334,9 @@ document.getElementById('mobileMenuToggle')?.addEventListener('click', () => {
   document.getElementById('overlay').classList.toggle('active');
 });
 
-document.getElementById('overlay')?.addEventListener('click', () => {
-  document.getElementById('sidebar').classList.remove('mobile-open');
-  document.getElementById('overlay').classList.remove('active');
-});
+document.getElementById('overlay')?.addEventListener('click', closeSidebar);
 
-/* ================== GALLERY ================== */
+// GALLERY SLIDER
 const slider = document.getElementById('gallerySlider');
 const slides = document.querySelectorAll('.gallery-slide');
 let currentIdx = 0, autoInt;
@@ -366,21 +371,38 @@ if (slides.length) {
   resetAuto();
 }
 
-/* ================== CAMPUS MAP ================== */
+// CAMPUS MAP
 const mapFrame = document.getElementById('dynamicMap');
 document.querySelectorAll('.campus-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.campus-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     if (btn.getAttribute('data-map') === 'kabangwe') {
-      mapFrame.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3847.9605875060197!2d28.23211497430332!3d-15.324376885252285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19405f709bf94523%3A0x98a0a3942348e255!2sEliana%20School!5e0!3m2!1sen!2zm!4v1767052991302!5m2!1sen!2zm";
+      mapFrame.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3847.9605875060197!2d28.23211497430332!3d-15.324376885252285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19405f709bf94523%3A0x98a0a3942348e255!2sEliana%20School!5e0!3m2!1sen!2szm!4v1767052991302!5m2!1sen!2szm";
     } else {
-      mapFrame.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3848.069784263813!2d28.282554274303116!3d-15.318442285257447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19405fc5e06edbf7%3A0x89cb19877fe5042!2sDoor%20Of%20Hope!5e0!3m2!1sen!2zm!4v1767052041697!5m2!1sen!2zm";
+      mapFrame.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3848.069784263813!2d28.282554274303116!3d-15.318442285257447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19405fc5e06edbf7%3A0x89cb19877fe5042!2sDoor%20Of%20Hope!5e0!3m2!1sen!2szm!4v1767052041697!5m2!1sen!2szm";
     }
   });
 });
 
-// Set default page
+// PWA INSTALL PROMPT
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installPrompt').style.display = 'flex';
+});
+
+document.getElementById('installBtn')?.addEventListener('click', () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { document.getElementById('installPrompt').style.display = 'none'; });
+  }
+});
+document.getElementById('closeInstall')?.addEventListener('click', () => {
+  document.getElementById('installPrompt').style.display = 'none';
+});
+
 showPage('home');
 </script>
 </body>
