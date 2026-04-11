@@ -2,142 +2,386 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eliana Trust School</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Eliana Trust School | Excellence in Education</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #0f172a; scroll-behavior: smooth; }
+    
+    /* SIDEBAR */
+    .app-wrapper { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 280px;
+      background: linear-gradient(180deg, #0a2a4a 0%, #051a2f 100%);
+      color: #eef2ff;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      overflow-y: auto;
+      z-index: 1000;
+      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-header { padding: 28px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
+    .logo-img { width: 80px; height: auto; margin-bottom: 12px; background: white; border-radius: 50%; padding: 8px; object-fit: contain; }
+    .school-logo { font-size: 22px; font-weight: 800; background: linear-gradient(135deg, #fff, #a0c4ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .school-tag { font-size: 11px; opacity: 0.75; margin-top: 6px; font-style: italic; }
+    .nav-links-sidebar { flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; }
+    .nav-links-sidebar a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; color: #e2e8f0; text-decoration: none; font-weight: 500; font-size: 14px; transition: all 0.2s; }
+    .nav-links-sidebar a i { width: 24px; font-size: 1.1rem; }
+    .nav-links-sidebar a:hover, .nav-links-sidebar a.active { background: #1e4a8a; color: white; transform: translateX(5px); }
+    .quick-links-group { margin-top: auto; padding: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .quick-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; opacity: 0.6; }
+    .quick-btn { background: rgba(255,255,255,0.08); border-radius: 40px; padding: 8px 12px; font-size: 12px; font-weight: 500; color: #f1f5f9; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; cursor: pointer; margin-bottom: 6px; width: 100%; }
+    .quick-btn:hover { background: #2563eb; transform: translateX(4px); }
+    .main-content { flex: 1; margin-left: 280px; transition: margin 0.3s; }
+    
+    /* Mobile Sidebar - AUTO CLOSE */
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); width: 280px; }
+      .sidebar.mobile-open { transform: translateX(0); }
+      .main-content { margin-left: 0; }
+      .menu-toggle-btn { display: block !important; }
+    }
+    .menu-toggle-btn { display: none; position: fixed; top: 16px; left: 16px; background: #0b5ed7; color: white; border: none; font-size: 24px; padding: 10px 14px; border-radius: 40px; z-index: 1100; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 999; }
+    @media (max-width: 768px) { .overlay.active { display: block; } }
+    
+    .page-section { display: none; animation: fadeIn 0.3s ease; }
+    .page-section.active-section { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
+    
+    .hero-modern { background: linear-gradient(135deg, #0b5ed7 0%, #1e6fdf 100%); padding: 40px 20px; text-align: center; color: white; }
+    .hero-modern h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; text-align: center; }
+    .card-grid { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin-top: 24px; }
+    .card { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 10px 25px -8px rgba(0,0,0,0.08); transition: all 0.3s; flex: 1 1 280px; border: 1px solid #eef2ff; text-align: left; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 20px 30px -12px rgba(0,0,0,0.12); }
+    .card i { font-size: 36px; color: #0b5ed7; margin-bottom: 14px; }
+    .btn-primary { background: #0b5ed7; color: white; border: none; padding: 10px 28px; border-radius: 40px; font-weight: 600; cursor: pointer; display: inline-block; text-decoration: none; font-family: inherit; transition: 0.2s; font-size: 14px; }
+    .btn-primary:hover { background: #094bb0; transform: scale(1.02); }
+    footer { background: #051a2f; color: #94a3b8; text-align: center; padding: 28px; margin-top: 30px; font-size: 13px; }
+    
+    /* Ticker */
+    .ticker { background: #0b5ed7; color: white; padding: 8px; overflow: hidden; white-space: nowrap; }
+    .ticker-content { display: inline-block; animation: ticker 25s linear infinite; font-size: 14px; font-weight: 500; }
+    @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+    
+    /* Iframe Container Styles for Parent Portal */
+    .iframe-portal-container {
+      background: white;
+      border-radius: 24px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 1000px;
+      box-shadow: 0 10px 25px -8px rgba(0,0,0,0.08);
+    }
+    .iframe-portal-container h3 {
+      color: #0b5ed7;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+    }
+    .results-iframe, .receipt-iframe {
+      width: 100%;
+      height: 700px;
+      border: none;
+      border-radius: 16px;
+      background: #f8fafc;
+    }
+    
+    /* Result & Receipt Styles */
+    .result-slip, .receipt-slip { background: white; border-radius: 24px; padding: 28px; margin: 20px 0; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1); text-align: left; }
+    .result-table, .receipt-table { width: 100%; border-collapse: collapse; margin: 20px 0; overflow-x: auto; display: block; }
+    .result-table th, .result-table td, .receipt-table th, .receipt-table td { border: 1px solid #e2e8f0; padding: 10px; text-align: center; font-size: 13px; }
+    .result-table th, .receipt-table th { background: #0b5ed7; color: white; }
+    .result-form-card, .payment-form-card { background: white; border-radius: 24px; padding: 28px; margin: 20px auto; max-width: 650px; box-shadow: 0 10px 25px -8px rgba(0,0,0,0.08); text-align: left; }
+    input, select { width: 100%; padding: 12px 16px; border-radius: 40px; border: 1px solid #cbd5e1; font-size: 14px; margin: 8px 0; font-family: inherit; }
+    
+    /* Gallery */
+    .gallery-slider-container { position: relative; max-width: 1000px; margin: auto; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+    .gallery-slider { display: flex; transition: transform 0.5s ease-in-out; }
+    .gallery-slide { min-width: 100%; position: relative; }
+    .gallery-slide img { width: 100%; height: 380px; object-fit: cover; display: block; }
+    .slide-caption { position: absolute; bottom: 0; background: linear-gradient(transparent, rgba(0,0,0,0.7)); width: 100%; padding: 16px; color: white; text-align: center; font-weight: bold; }
+    .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 12px; cursor: pointer; font-size: 18px; border-radius: 50%; z-index: 10; }
+    .slider-btn:hover { background: #0b5ed7; }
+    .prev { left: 12px; }
+    .next { right: 12px; }
+    .dot-container { text-align: center; padding: 12px; }
+    .dot { height: 10px; width: 10px; margin: 0 4px; background-color: #bbb; border-radius: 50%; display: inline-block; cursor: pointer; }
+    .dot.active { background-color: #0b5ed7; }
+    
+    /* Pathway Cards */
+    .pathway-science { background: linear-gradient(135deg, #e0f2fe, #bae6fd); border-left: 5px solid #0284c7; }
+    .pathway-social { background: linear-gradient(135deg, #fef9c3, #fef08a); border-left: 5px solid #eab308; }
+    .pathway-business { background: linear-gradient(135deg, #dcfce7, #bbf7d0); border-left: 5px solid #16a34a; }
+    .subject-icon { margin-right: 8px; width: 24px; display: inline-block; }
+    .feature-badge { display: inline-block; background: #eef2ff; padding: 5px 12px; border-radius: 30px; margin: 5px; font-size: 12px; font-weight: 500; }
+    
+    /* Campus Map */
+    .campus-selector { margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .campus-btn { background: #e2e8f0; border: none; padding: 8px 20px; border-radius: 40px; font-weight: 600; cursor: pointer; font-size: 13px; }
+    .campus-btn.active, .campus-btn:hover { background: #0b5ed7; color: white; }
+    .map-frame { width: 100%; height: 380px; border-radius: 24px; border: none; }
+    
+    /* Floating Buttons */
+    .floating-admission { position: fixed; bottom: 30px; left: 20px; background: #059669; color: white; padding: 10px 18px; border-radius: 40px; font-weight: bold; font-size: 13px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000; display: flex; align-items: center; gap: 8px; }
+    .floating-buttons { position: fixed; bottom: 30px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 999; }
+    .float-icon { width: 48px; height: 48px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .float-icon.call { background: #0b5ed7; }
+    .go-top { position: fixed; bottom: 30px; right: 20px; background: #0b5ed7; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; z-index: 1000; margin-right: 60px; }
+    @media (max-width: 768px) { .go-top { margin-right: 0; bottom: 100px; } .floating-admission { bottom: 100px; } .results-iframe, .receipt-iframe { height: 500px; } }
+    
+    .iframe-chat { width: 100%; height: 500px; border-radius: 20px; border: none; margin-top: 20px; }
+    @media print { .sidebar, .floating-buttons, .go-top, .menu-toggle-btn, .ticker, .floating-admission, .result-form-card, .payment-form-card { display: none; } .main-content { margin: 0; } .result-slip, .receipt-slip { box-shadow: none; padding: 0; } }
+    
+    .grade-A { color: #059669; font-weight: bold; }
+    .grade-B { color: #3b82f6; font-weight: bold; }
+    .grade-C { color: #eab308; font-weight: bold; }
+    .grade-D { color: #f97316; font-weight: bold; }
+    .grade-F { color: #dc2626; font-weight: bold; }
+  </style>
 </head>
-
 <body>
 
-  <!-- ================= HEADER ================= -->
-  <header>
-    <h1>ELIANA TRUST SCHOOL</h1>
+<button class="menu-toggle-btn" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+<div class="overlay" id="overlay"></div>
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About Us</a>
-      <a href="academics.html">Academics</a>
-      <a href="admissions.html">Admissions</a>
-      <a href="register.html">Register</a>
-      <a href="parent-portal.html">Parent Portal</a>
-      <a href="results.html" class="active">Results</a>
-
-      <!-- ✅ WORKING TEACHER PORTAL (Google Script) -->
-      <a 
-        href="https://script.google.com/macros/s/AKfycbzw8GZuh7nxbuCC4vgURgqaoW3LtgIGFiPgXIrF5PIsyTghFOceLsbV2VeDbunmSJgHnQ/exec"
-        target="_blank">
-        Teacher Portal
-      </a>
-
-      <a href="gallery.html">Gallery</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
-
-  <!-- ================= HERO ================= -->
-  <section class="hero">
-    <h2>Shaping Bright Futures</h2>
-    <p>Quality education, strong values, and a safe learning environment.</p>
-    <a href="admissions.html" class="btn">Enroll Now</a>
-  </section>
-
-  <!-- ================= FEATURES ================= -->
-  <section class="features">
-    <h2>Why Choose Eliana Trust School?</h2>
-
-    <div class="feature-cards">
-      <div class="card">
-        <h3>Qualified Teachers</h3>
-        <p>Dedicated and experienced teachers focused on every learner’s success.</p>
-      </div>
-
-      <div class="card">
-        <h3>Safe Environment</h3>
-        <p>A secure, caring, and child-friendly learning atmosphere.</p>
-      </div>
-
-      <div class="card">
-        <h3>Strong Values</h3>
-        <p>We build discipline, respect, and responsibility in our learners.</p>
+<div class="app-wrapper">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="images/logo.png" alt="Eliana Trust Logo" class="logo-img" onerror="this.style.display='none'">
+      <div class="school-logo">ELIANA TRUST SCHOOL</div>
+      <div class="school-tag">Come to Learn, Depart to Serve</div>
+    </div>
+    <div class="nav-links-sidebar">
+      <a href="#" data-page="home"><i class="fas fa-home"></i> Home</a>
+      <a href="#" data-page="about"><i class="fas fa-school"></i> About Us</a>
+      <a href="#" data-page="academics"><i class="fas fa-book-open"></i> Academics</a>
+      <a href="#" data-page="admissions"><i class="fas fa-envelope-open-text"></i> Admissions</a>
+      <a href="#" data-page="parent-portal"><i class="fas fa-chalkboard-user"></i> Parent Portal</a>
+      <a href="#" data-page="results"><i class="fas fa-chart-line"></i> Results</a>
+      <a href="#" data-page="gallery"><i class="fas fa-images"></i> Gallery</a>
+      <a href="#" data-page="news"><i class="fas fa-newspaper"></i> News</a>
+      <a href="#" data-page="digital"><i class="fas fa-robot"></i> AI Study Assistant</a>
+      <a href="#" data-page="contact"><i class="fas fa-phone-alt"></i> Contact</a>
+    </div>
+    <div class="quick-links-group">
+      <div class="quick-title"><i class="fas fa-bolt"></i> QUICK LINKS</div>
+      <div class="quick-buttons">
+        <a href="#" class="quick-btn" data-page="parent-portal"><i class="fas fa-graduation-cap"></i> My Results</a>
+        <a href="#" class="quick-btn" data-page="parent-portal"><i class="fas fa-receipt"></i> My Payments</a>
+        <a href="#" class="quick-btn" data-page="digital"><i class="fas fa-robot"></i> AI Assistant</a>
+        <a href="#" class="quick-btn" id="scrollTopBtn"><i class="fas fa-arrow-up"></i> Top</a>
       </div>
     </div>
-  </section>
+  </aside>
 
-  <!-- ================= MAIN ================= -->
-  <main>
+  <main class="main-content">
+    <!-- Ticker -->
+    <div class="ticker"><div class="ticker-content">🎓 100% Exam Pass Rate | 🏆 ECZ Registered School | 📚 Modern Curriculum | 🏠 Safe Boarding | 💻 Digital Learning | 📱 SMS Alerts | 💳 Online Payments Coming Soon</div></div>
 
-    <section>
-      <h2>Welcome to Eliana Trust School</h2>
-      <p>
-        At Eliana Trust School, we nurture young minds through academic excellence,
-        discipline, and strong moral values to prepare them for a successful future.
-      </p>
-    </section>
+    <!-- HOME -->
+    <div id="home" class="page-section active-section">
+      <div class="hero-modern"><img src="images/logo.png" style="width: 80px; margin-bottom: 10px;" onerror="this.style.display='none'"><h2>ELIANA TRUST SCHOOL</h2><p>Come to Learn, Depart to Serve</p><a href="#" class="btn-primary" data-page="admissions" style="margin-top: 15px;">Enroll Today →</a></div>
+      <div class="container"><h2 style="color:#0b5ed7;">Why Choose Eliana Trust?</h2><div class="card-grid"><div class="card"><i class="fas fa-chalkboard-user"></i><h3>Qualified Teachers</h3><p>Experienced ECZ-registered educators</p></div><div class="card"><i class="fas fa-certificate"></i><h3>ECZ Registered</h3><p>Full Zambian curriculum compliance</p></div><div class="card"><i class="fas fa-chart-line"></i><h3>Outstanding Results</h3><p>90%+ pass rate in national exams</p></div></div><img src="images/stamp.png" style="max-width: 100px; margin: 20px auto; display: block;" onerror="this.style.display='none'"></div>
+    </div>
 
-    <section class="features">
-      <h2>School Life & Facilities</h2>
+    <!-- ABOUT -->
+    <div id="about" class="page-section"><div class="hero-modern"><img src="images/logo.png" style="width: 70px;" onerror="this.style.display='none'"><h2>About Us</h2><p>Come to Learn, Depart to Serve</p></div><div class="container"><div class="card"><h3><i class="fas fa-bullseye"></i> Mission</h3><p>Transform children into better citizens through quality education, strong discipline, and learner-centered guidance.</p></div><div class="card" style="margin-top: 20px;"><h3><i class="fas fa-eye"></i> Vision</h3><p>Produce competent graduates who serve society professionally.</p></div><div class="card" style="margin-top: 20px;"><h3><i class="fas fa-heart"></i> Core Values</h3><p>Professionalism · Integrity · Hardworking · Accountability · Care · Teamwork · Discipline</p></div></div></div>
 
-      <div class="feature-cards">
-
-        <div class="card">
-          <img src="images/classroom.jpg" alt="Classroom" style="width:100%; border-radius:8px;">
-          <h3>Modern Classrooms</h3>
-          <p>Well-equipped classrooms that support effective learning.</p>
+    <!-- ACADEMICS -->
+    <div id="academics" class="page-section">
+      <div class="hero-modern"><h2>Academic Pathways</h2><p>ECZ Registered Curriculum | Term 1 In Progress</p></div>
+      <div class="container">
+        <div class="card-grid">
+          <div class="card pathway-science"><i class="fas fa-flask"></i><h3>Natural Science</h3><p><i class="fas fa-book subject-icon"></i> English<br><i class="fas fa-calculator subject-icon"></i> Mathematics<br><i class="fas fa-microscope subject-icon"></i> Biology, Chemistry, Physics<br><i class="fas fa-laptop subject-icon"></i> ICT<br><i class="fas fa-gavel subject-icon"></i> Civic Education<br><i class="fas fa-church subject-icon"></i> Religious Education</p><p><strong>Careers:</strong> Doctor, Engineer, Pharmacist, Laboratory Scientist, Environmental Scientist, Researcher</p></div>
+          <div class="card pathway-social"><i class="fas fa-gavel"></i><h3>Social Science</h3><p><i class="fas fa-book subject-icon"></i> English, Literature<br><i class="fas fa-calculator subject-icon"></i> Mathematics<br><i class="fas fa-balance-scale subject-icon"></i> Civic Education<br><i class="fas fa-laptop subject-icon"></i> ICT<br><i class="fas fa-dna subject-icon"></i> Biology<br><i class="fas fa-church subject-icon"></i> Religious Education</p><p><strong>Careers:</strong> Lawyer, Teacher, Journalist, Social Worker, Public Administrator, Psychologist</p></div>
+          <div class="card pathway-business"><i class="fas fa-chart-line"></i><h3>Business & Finance</h3><p><i class="fas fa-chart-bar subject-icon"></i> Principles of Accounts<br><i class="fas fa-store subject-icon"></i> Commerce<br><i class="fas fa-laptop subject-icon"></i> ICT<br><i class="fas fa-balance-scale subject-icon"></i> Civic Education<br><i class="fas fa-book subject-icon"></i> English, Mathematics<br><i class="fas fa-dna subject-icon"></i> Biology</p><p><strong>Careers:</strong> Accountant, Banker, Entrepreneur, Financial Analyst, Business Consultant, Auditor, Investment Advisor</p><div><span class="feature-badge">💰 Accounting</span><span class="feature-badge">🏦 Banking</span><span class="feature-badge">💼 Business Management</span><span class="feature-badge">📊 Financial Analysis</span></div></div>
         </div>
-
-        <div class="card">
-          <img src="images/boarding.jpg" alt="Boarding" style="width:100%; border-radius:8px;">
-          <h3>Boarding Facilities</h3>
-          <p>Safe and comfortable dormitories for boys and girls.</p>
-        </div>
-
-        <div class="card">
-          <img src="images/sports.jpg" alt="Sports" style="width:100%; border-radius:8px;">
-          <h3>Sports & Activities</h3>
-          <p>Physical education and extracurricular activities for all learners.</p>
-        </div>
-
       </div>
-    </section>
+    </div>
 
-    <section class="news">
-      <h2>Latest News & Announcements</h2>
+    <!-- ADMISSIONS -->
+    <div id="admissions" class="page-section"><div class="hero-modern"><h2>Admissions Open 2026</h2><a href="https://docs.google.com/forms/d/e/1FAIpQLSd9tZRkOYJGbW0tD57rm9d6pVAl20RMY1k1YAC-xzvEDWhd0w/viewform" target="_blank" class="btn-primary">Apply Online →</a></div><div class="container"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd9tZRkOYJGbW0tD57rm9d6pVAl20RMY1k1YAC-xzvEDWhd0w/viewform?embedded=true" width="100%" height="900" frameborder="0" style="border-radius:20px;"></iframe></div></div>
 
-      <div class="news-cards">
-
-        <div class="news-card">
-          <span class="news-date">TERM 1 2026</span>
-          <h3>Admissions Open – 2026</h3>
-          <p>Applications for 2026 are now open in all our campuses.</p>
+    <!-- PARENT PORTAL - UPDATED WITH IFRAMES -->
+    <div id="parent-portal" class="page-section">
+      <div class="hero-modern"><h2>Parent Portal</h2><p>Access Results & Payment Receipts</p></div>
+      <div class="container">
+        <!-- Results Iframe -->
+        <div class="iframe-portal-container">
+          <h3><i class="fas fa-graduation-cap"></i> Academic Results Portal</h3>
+          <iframe src="https://script.google.com/macros/s/AKfycbySfimS4MD7v2wKlW3MyF5WlITeGFWmDmCHE-1IuGbguQIq0fCS22RvzBzr7ZCW9W3J/exec" class="results-iframe" title="Student Results Portal"></iframe>
         </div>
-
-        <div class="news-card">
-          <span class="news-date">Jan 2026</span>
-          <h3>Boarding Facilities Available</h3>
-          <p>Limited boarding spaces available at Ngwerere Campus.</p>
+        
+        <!-- Payment Receipts Iframe -->
+        <div class="iframe-portal-container">
+          <h3><i class="fas fa-receipt"></i> Payment Receipts Portal</h3>
+          <iframe src="https://script.google.com/macros/s/AKfycbwaitF3QgCTpRuT-td312ebfxAy8sGsnoqZbHkSYSrkth7CJ1Gd-Jl8H-v0f8T_XXGg/exec" class="receipt-iframe" title="Payment Receipts Portal"></iframe>
         </div>
-
-        <div class="news-card">
-          <span class="news-date">12 Jan 2026</span>
-          <h3>School Reopening</h3>
-          <p>School opens on 12th January 2026 at 07:30 hours.</p>
-        </div>
-
       </div>
-    </section>
+    </div>
 
+    <!-- RESULTS PAGE - Also updated with iframe -->
+    <div id="results" class="page-section">
+      <div class="hero-modern"><h2>Student Results Portal</h2><p>Access Your Academic Results</p></div>
+      <div class="container">
+        <div class="iframe-portal-container">
+          <iframe src="https://script.google.com/macros/s/AKfycbySfimS4MD7v2wKlW3MyF5WlITeGFWmDmCHE-1IuGbguQIq0fCS22RvzBzr7ZCW9W3J/exec" class="results-iframe" title="Student Results Portal" style="height: 700px;"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div id="gallery" class="page-section">
+      <div class="hero-modern"><h2>Our Gallery</h2><p>Moments at Eliana Trust School</p></div>
+      <div class="container">
+        <div class="gallery-slider-container">
+          <div class="gallery-slider" id="gallerySlider">
+            <div class="gallery-slide"><img src="images/classroom.jpg" alt="Classroom" onerror="this.src='https://picsum.photos/id/20/1000/400'"><div class="slide-caption">Modern Classrooms</div></div>
+            <div class="gallery-slide"><img src="images/boarding.jpg" alt="Boarding" onerror="this.src='https://picsum.photos/id/177/1000/400'"><div class="slide-caption">Boarding Facilities</div></div>
+            <div class="gallery-slide"><img src="images/lab.jpg" alt="Lab" onerror="this.src='https://picsum.photos/id/96/1000/400'"><div class="slide-caption">Science Laboratory</div></div>
+            <div class="gallery-slide"><img src="images/library.jpg" alt="Library" onerror="this.src='https://picsum.photos/id/0/1000/400'"><div class="slide-caption">School Library</div></div>
+            <div class="gallery-slide"><img src="images/sports.jpg" alt="Sports" onerror="this.src='https://picsum.photos/id/29/1000/400'"><div class="slide-caption">Sports Activities</div></div>
+          </div>
+          <button class="slider-btn prev" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+          <button class="slider-btn next" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="dot-container" id="dotContainer"></div>
+      </div>
+    </div>
+
+    <!-- NEWS -->
+    <div id="news" class="page-section"><div class="hero-modern"><h2><i class="fas fa-newspaper"></i> News & Announcements</h2></div><div class="container"><div class="card-grid"><div class="card"><i class="fas fa-calendar-alt"></i><h3>Term 1 In Progress</h3><p>Academic calendar running smoothly. Mid-term break: April 10-14, 2026</p></div><div class="card"><i class="fas fa-trophy"></i><h3>Science Fair 2026</h3><p>Join us on May 15 for the annual Science Exhibition</p></div><div class="card"><i class="fas fa-chalkboard"></i><h3>Parent-Teacher Meeting</h3><p>April 25, 2026. Come discuss your child's progress</p></div></div></div></div>
+
+    <!-- DIGITAL LEARNING -->
+    <div id="digital" class="page-section"><div class="hero-modern"><h2><i class="fas fa-robot"></i> AI Study Assistant</h2><p>Powered by ChatGPT - Your 24/7 Learning Companion</p></div><div class="container"><div class="card"><h3>📖 ChatGPT Study Assistant</h3><p>Click the button below to open ChatGPT. Ask questions about any subject, get explanations, and enhance your learning.</p><a href="https://chat.openai.com/" target="_blank" class="btn-primary" style="display: inline-block; margin-top: 15px;"><i class="fas fa-external-link-alt"></i> Open ChatGPT in New Tab</a></div></div></div>
+
+    <!-- CONTACT -->
+    <div id="contact" class="page-section"><div class="hero-modern"><h2>Contact & Campuses</h2></div><div class="container"><div class="card-grid"><div class="card"><i class="fas fa-phone-alt"></i><h3>Call Us</h3><p>📞 +260 961 147 474<br>📞 +260 978 859 120</p></div><div class="card"><i class="fas fa-envelope"></i><h3>Email</h3><p>annakangwa78@gmail.com<br>admissions@elianatrustschool.com</p></div></div><div class="card"><h3><i class="fas fa-map-marked-alt"></i> Select Campus</h3><div class="campus-selector"><button class="campus-btn active" data-map="kabangwe">🏫 Kabangwe Campus</button><button class="campus-btn" data-map="ngwerere">🏘️ Ngwerere Campus</button></div><iframe id="dynamicMap" class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3847.9605875060197!2d28.23211497430332!3d-15.324376885252285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19405f709bf94523%3A0x98a0a3942348e255!2sEliana%20School!5e0!3m2!1sen!2szm!4v1767052991302!5m2!1sen!2szm" allowfullscreen loading="lazy"></iframe></div></div></div>
+
+    <footer><p>© 2026 Eliana Trust School — Come to Learn, Depart to Serve</p><p>📧 admissions@elianatrustschool.com | 📞 +260 978 859 120 | ECZ Registered School</p></footer>
   </main>
+</div>
 
-  <!-- ================= FOOTER ================= -->
-  <footer>
-    <p>&copy; 2026 Eliana Trust School. All Rights Reserved.</p>
-  </footer>
+<div class="floating-admission"><i class="fas fa-door-open"></i> Admissions Open 2026</div>
+<div class="floating-buttons"><a href="https://wa.me/260978859120" target="_blank" class="float-icon"><i class="fab fa-whatsapp"></i></a><a href="tel:+260978859120" class="float-icon call"><i class="fas fa-phone-alt"></i></a></div>
+<a href="#" class="go-top" id="goTopBtn"><i class="fas fa-chevron-up"></i></a>
 
-  <!-- ================= FLOATING BUTTONS ================= -->
-  <div class="floating-buttons">
-    <a href="https://wa.me/260978859120" target="_blank" class="float-btn whatsapp" title="Chat on WhatsApp">💬</a>
-    <a href="tel:+260978859120" class="float-btn call" title="Call Us">📞</a>
-  </div>
+<script>
+/* ================== PAGE NAVIGATION WITH AUTO-CLOSE ================== */
+const pages = ['home', 'about', 'academics', 'admissions', 'parent-portal', 'results', 'gallery', 'news', 'digital', 'contact'];
 
+function showPage(pageId) {
+  pages.forEach(p => { 
+    let el = document.getElementById(p); 
+    if (el) el.classList.remove('active-section'); 
+  });
+  
+  document.getElementById(pageId)?.classList.add('active-section');
+  
+  document.querySelectorAll('.nav-links-sidebar a').forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('data-page') === pageId) link.classList.add('active');
+  });
+  
+  // AUTO-CLOSE SIDEBAR ON MOBILE
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('mobile-open');
+    document.getElementById('overlay').classList.remove('active');
+  }
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll('.nav-links-sidebar a, .quick-btn[data-page]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    let pg = btn.getAttribute('data-page');
+    if (pg) showPage(pg);
+  });
+});
+
+document.getElementById('scrollTopBtn')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+document.getElementById('goTopBtn')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+document.getElementById('mobileMenuToggle')?.addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+  document.getElementById('overlay').classList.toggle('active');
+});
+
+document.getElementById('overlay')?.addEventListener('click', () => {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('overlay').classList.remove('active');
+});
+
+/* ================== GALLERY ================== */
+const slider = document.getElementById('gallerySlider');
+const slides = document.querySelectorAll('.gallery-slide');
+let currentIdx = 0, autoInt;
+
+function updateSlider() {
+  if (slider) slider.style.transform = `translateX(-${currentIdx * 100}%)`;
+  document.querySelectorAll('.dot').forEach((d, i) => { d.classList.toggle('active', i === currentIdx); });
+}
+
+function createDots() {
+  const dc = document.getElementById('dotContainer');
+  if (!dc) return;
+  dc.innerHTML = '';
+  slides.forEach((_, i) => {
+    let d = document.createElement('span');
+    d.classList.add('dot');
+    if (i === currentIdx) d.classList.add('active');
+    d.addEventListener('click', () => { currentIdx = i; updateSlider(); resetAuto(); });
+    dc.appendChild(d);
+  });
+}
+
+function nextSlide() { currentIdx = (currentIdx + 1) % slides.length; updateSlider(); resetAuto(); }
+function prevSlide() { currentIdx = (currentIdx - 1 + slides.length) % slides.length; updateSlider(); resetAuto(); }
+function resetAuto() { if (autoInt) clearInterval(autoInt); autoInt = setInterval(nextSlide, 5000); }
+
+if (slides.length) {
+  createDots();
+  updateSlider();
+  document.getElementById('prevSlide')?.addEventListener('click', prevSlide);
+  document.getElementById('nextSlide')?.addEventListener('click', nextSlide);
+  resetAuto();
+}
+
+/* ================== CAMPUS MAP ================== */
+const mapFrame = document.getElementById('dynamicMap');
+document.querySelectorAll('.campus-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.campus-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (btn.getAttribute('data-map') === 'kabangwe') {
+      mapFrame.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3847.9605875060197!2d28.23211497430332!3d-15.324376885252285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19405f709bf94523%3A0x98a0a3942348e255!2sEliana%20School!5e0!3m2!1sen!2zm!4v1767052991302!5m2!1sen!2zm";
+    } else {
+      mapFrame.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3848.069784263813!2d28.282554274303116!3d-15.318442285257447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19405fc5e06edbf7%3A0x89cb19877fe5042!2sDoor%20Of%20Hope!5e0!3m2!1sen!2zm!4v1767052041697!5m2!1sen!2zm";
+    }
+  });
+});
+
+// Set default page
+showPage('home');
+</script>
 </body>
 </html>
