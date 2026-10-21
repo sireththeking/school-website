@@ -133,11 +133,14 @@
     <option>English</option>
     <option>Math</option>
     <option>Science</option>
-    <option>Literacy</option>
+    <option>Special paper 1</option>
+     <option>special paper 2</option>
+     <option>Zambian language</option>
+     <option>Literacy</option>
     <option>Numeracy</option>
     <option>Social Studies</option>
     <option>ICT</option>
-    <option>Creative Arts</option>
+    <option>technology studies</option>
     <option>Religious Education</option>
   </select>
 
@@ -178,8 +181,8 @@ function submitResult(){
   const adm = AdmissionNo.value.trim();
   const admError = document.getElementById("admError");
 
-  if(!adm.startsWith("ETS26")){
-    admError.innerText = "Admission number must start with ETS26";
+  if(!adm.startsWith("260701")){
+    admError.innerText = "Admission number must start with 260701";
     return;
   } else {
     admError.innerText = "";
